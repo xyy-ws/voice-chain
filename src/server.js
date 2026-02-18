@@ -35,6 +35,10 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, { items: messages });
   }
 
+  if (req.method === 'GET' && url.pathname === '/v1/preferences') {
+    return json(res, 200, { preferences });
+  }
+
   if (req.method === 'POST' && url.pathname === '/v1/preferences') {
     let body = '';
     req.on('data', (chunk) => (body += chunk));
