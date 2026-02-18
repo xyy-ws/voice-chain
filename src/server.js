@@ -1,15 +1,8 @@
 import http from 'node:http';
 import { URL } from 'node:url';
+import { ingestAndRank } from './ingestion.js';
 
-const feed = [
-  {
-    id: 'ai-001',
-    title: 'AI ecosystem daily digest placeholder',
-    summary: 'MVP scaffold is live; ingestion pipeline to be added next.',
-    source: 'system',
-    publishedAt: new Date().toISOString()
-  }
-];
+let feed = ingestAndRank('ai');
 
 let messages = [];
 let preferences = {
@@ -31,7 +24,11 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.method === 'GET' && url.pathname === '/v1/feed') {
-    return json(res, 200, { items: feed, topic: url.searchParams.get('topic') || 'ai' });
+    const topic = url.searchParams.get('topic') || preferences.topics?.[0] || 'ai';
+    if (url.searchParams.get('refresh') === '1') {
+      feed = ingestAndRank(topic);
+    }
+    return json(res, 200, { items: feed, topic });
   }
 
   if (req.method === 'GET' && url.pathname === '/v1/messages') {
