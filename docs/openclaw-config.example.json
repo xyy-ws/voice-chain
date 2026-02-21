@@ -1,0 +1,56 @@
+{
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "groupPolicy": "allowlist",
+      "streamMode": "partial"
+    },
+    "discord": {
+      "enabled": true,
+      "groupPolicy": "open",
+      "guilds": {
+        "<GUILD_ID>": {
+          "channels": {
+            "<CHANNEL_ID>": {
+              "allow": true,
+              "requireMention": false
+            }
+          }
+        }
+      }
+    }
+  },
+  "tools": {
+    "media": {
+      "audio": {
+        "enabled": true,
+        "maxBytes": 20971520,
+        "models": [
+          {
+            "type": "cli",
+            "command": "python3",
+            "args": [
+              "/ABSOLUTE/PATH/TO/voice-chain/src/tools/faster-whisper-transcribe.py",
+              "--audio",
+              "{{MediaPath}}",
+              "--model",
+              "base",
+              "--device",
+              "cpu",
+              "--compute-type",
+              "int8",
+              "--beam-size",
+              "1",
+              "--language",
+              "zh",
+              "--vad-filter",
+              "--text-only"
+            ],
+            "timeoutSeconds": 90
+          }
+        ]
+      }
+    }
+  }
+}
