@@ -8,6 +8,16 @@
 - 语音相关测试（`test/voice-*.test.js`）
 - `src/server.js`（语音入口集成）
 
+## 一键安装（快速初始化）
+
+```bash
+git clone https://github.com/xyy-ws/voice-chain.git
+cd voice-chain
+bash ./install.sh
+```
+
+该脚本会复制 OpenClaw 配置模板到本地目录，方便你直接填值启用。
+
 ## OpenClaw 端必需配置
 
 已提供示例文件：
